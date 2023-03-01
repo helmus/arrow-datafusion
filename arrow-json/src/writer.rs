@@ -302,8 +302,9 @@ fn set_column_for_json_rows(
             let options = FormatOptions::default();
             let formatter = ArrayFormatter::try_new(array.as_ref(), &options)?;
             let data = array.data();
+            let len = array.len();
             rows.iter_mut().enumerate().for_each(|(idx, row)| {
-                if data.is_valid(idx) {
+                if data.is_valid(idx) && idx < len {
                     row.insert(
                         col_name.to_string(),
                         formatter.value(idx).to_string().into(),
